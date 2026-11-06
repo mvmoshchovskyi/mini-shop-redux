@@ -1,6 +1,7 @@
 import type { Product } from '../../types/product';
 import { useAppDispatch } from '../../app/hooks';
 import { addToCart } from '../../features/cart/cartSlice';
+import styles from './ProductCard.module.scss';
 
 interface ProductCardProps {
   product: Product;
@@ -14,11 +15,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <article>
-      <h3>{product.title}</h3>
-      <p>${product.price}</p>
+    <article className={styles.card}>
+      <h3 className={styles.title}>{product.title}</h3>
+      <p className={styles.price}>${product.price}</p>
 
-      <button onClick={handleAddToCart}>
+      <button className={styles.button} type="button" onClick={handleAddToCart}>
         Add to cart
       </button>
     </article>

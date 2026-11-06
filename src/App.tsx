@@ -1,14 +1,16 @@
-import { ProductList } from './components/product-list/ProductList';
-import { Cart } from './components/cart/Cart';
+import { Header } from './components/header/Header';
+import { AppRouter } from './router/AppRouter';
+import styles from './App.module.scss';
 
 function App() {
   return (
-    <main>
-      <h1>Mini Shop</h1>
+    <div className={styles.app}>
+      <Header />
 
-      <ProductList />
-      <Cart />
-    </main>
+      <main className={styles.main}>
+        <AppRouter />
+      </main>
+    </div>
   );
 }
 
