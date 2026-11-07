@@ -14,3 +14,50 @@
   gap: 16px;
   background-color: lightgreen;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.button {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.clearButton {
+  border-color: #dc2626;
+  background-color: #fff;
+  color: #dc2626;
+}
+
+.clearButton:hover {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.restoreButton {
+  border-color: #16a34a;
+  background-color: #fff;
+  color: #16a34a;
+}
+
+.restoreButton:hover {
+  background-color: #16a34a;
+  color: #fff;
+}
+
+.button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
