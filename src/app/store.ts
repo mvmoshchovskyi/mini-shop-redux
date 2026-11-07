@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from '../features/cart/cartSlice';
-import productsReducer from '../features/products/productsSlice';
+import cartReducer from "../features/cart/cartSlice";
+import productsReducer from "../features/products/productsSlice";
+import { loggerMiddleware } from "./loggerMiddleware";
 
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
-    products: productsReducer
+    products: productsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(loggerMiddleware),
 });
 
 // Тип усього Redux state
