@@ -81,14 +81,32 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    // setAll замінює весь набір товарів: ids та entities перезаписуються.
     setProducts: (state, action: PayloadAction<Product[]>) => {
-      // state.items = action.payload;
-      productsAdapter.setAll(state, action.payload)
+      productsAdapter.setAll(state, action.payload);
     },
 
+    // removeAll очищає і ids, і entities.
     clearProducts: (state) => {
-      // state.items = [];
-      productsAdapter.removeAll(state)
+      productsAdapter.removeAll(state);
+    },
+
+    // addOne додає один товар у нормалізоване сховище.
+    productAdded: (state, action: PayloadAction<Product>) => {
+      productsAdapter.addOne(state, action.payload);
+    },
+
+    // updateOne приймає { id, changes } і оновлює лише потрібні поля.
+    productUpdated: (
+      state,
+      action: PayloadAction<{ id: number; changes: Partial<Product> }>,
+    ) => {
+      productsAdapter.updateOne(state, action.payload);
+    },
+
+    // removeOne видаляє товар за id.
+    productRemoved: (state, action: PayloadAction<number>) => {
+      productsAdapter.removeOne(state, action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -133,10 +151,12 @@ const productsSlice = createSlice({
       });
   },
 });
-export const productsSelectors = productsAdapter.getSelectors<RootState>(
-  (state) => state.products,
-);
-
-export const { setProducts, clearProducts } = productsSlice.actions;
+export const {
+  setProducts,
+  clearProducts,
+  productAdded,
+  productUpdated,
+  productRemoved,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;

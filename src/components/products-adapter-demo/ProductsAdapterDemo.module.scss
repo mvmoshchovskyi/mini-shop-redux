@@ -1,0 +1,74 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.select {
+  min-width: 180px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  font-size: 14px;
+}
+
+.selectedCard {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--code-bg);
+}
+
+.selectedText {
+  margin: 6px 0 0;
+  color: var(--text-h);
+  font-size: 15px;
+}
+
+.idsValue {
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.empty {
+  margin: 0;
+  padding: 20px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  text-align: center;
+}
+
+.error {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.debug {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

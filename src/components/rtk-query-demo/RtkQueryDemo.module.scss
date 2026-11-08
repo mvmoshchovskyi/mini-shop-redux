@@ -1,0 +1,100 @@
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--code-bg);
+}
+
+.detailLabel {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.detailValue {
+  color: var(--text-h);
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding-left: 22px;
+  color: var(--text-h);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.steps code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--code-bg);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.cache {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cacheList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cacheRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.cacheKey {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.empty {
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  text-align: center;
+}
+
+.error {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 14px;
+}

@@ -4,7 +4,6 @@ import {
   useGetProductsQuery,
   // useUpdateProductMutation,
 } from "../../features/products/productsApi";
-import { products as initialProducts } from "../../data/products";
 // import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProductCard } from "../product-card/ProductCard";
 // import {
@@ -29,7 +28,7 @@ export const ProductList = () => {
     refetch,
   } = useGetProductsQuery();
 
-  const [addProduct, { isLoading: isAddingProduct, error: addProductError }] =
+  const [addProduct, { isLoading: isAddingProduct }] =
     useAddProductMutation();
 
   const handleAddProduct = async () => {
@@ -61,9 +60,10 @@ export const ProductList = () => {
       <section className={styles.buttons}>
         <button
           onClick={handleAddProduct}
+          disabled={isAddingProduct}
           className={`${styles.button} ${styles.restoreButton}`}
         >
-          Add product
+          {isAddingProduct ? "Adding..." : "Add product"}
         </button>
         <button
           disabled={isFetching}

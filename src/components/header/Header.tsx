@@ -24,6 +24,15 @@ export const Header = () => {
           className={({ isActive }) =>
             isActive ? `${styles.link} ${styles.active}` : styles.link
           }
+          to="/demo"
+        >
+          Redux demo
+        </NavLink>
+
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
           to="/cart"
         >
           Cart

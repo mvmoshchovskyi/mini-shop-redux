@@ -14,10 +14,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const handleAddToCart = () => {
     dispatch(addToCart(product));
   };
-  const [
-    updateProduct,
-    { isLoading: isUpdatingProduct, error: updateProductError },
-  ] = useUpdateProductMutation();
+  const [updateProduct, { isLoading: isUpdatingProduct }] =
+    useUpdateProductMutation();
 
   const handleUpdateProduct = async () => {
     try {
