@@ -51,9 +51,9 @@
 .activeTab {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .activeTab:hover {
-  color: #fff;
+  color: var(--accent-contrast);
 }

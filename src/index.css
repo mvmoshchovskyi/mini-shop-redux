@@ -3,7 +3,10 @@
   margin: 0;
   padding: 0;
 }
+
 :root {
+  color-scheme: light;
+
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
@@ -12,9 +15,33 @@
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
+  --accent-contrast: #fff;
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --app-bg: #f4f3ec;
+  --main-bg: #fff;
+  --surface: #fff;
+  --surface-muted: #f4f3ec;
+
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+
+  --success: #16a34a;
+  --success-hover: #15803d;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+
+  --info: #1d4ed8;
+  --info-bg: #eff6ff;
+  --info-border: #bfdbfe;
+
+  --neutral-bg: #f3f4f6;
+  --neutral-border: #d1d5db;
+  --neutral-text: #6b7280;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -22,13 +49,61 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --text: #b6b0c3;
+  --text-h: #f6f4fb;
+  --bg: #14121a;
+  --border: #322d3f;
+  --code-bg: #1d1a26;
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.14);
+  --accent-border: rgba(192, 132, 252, 0.55);
+  --accent-contrast: #14121a;
+  --social-bg: rgba(29, 26, 38, 0.6);
+  --shadow:
+    rgba(0, 0, 0, 0.5) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+
+  --app-bg: #0f0d14;
+  --main-bg: #14121a;
+  --surface: #1d1a26;
+  --surface-muted: #1a1722;
+
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --danger-border: rgba(248, 113, 113, 0.4);
+
+  --success: #4ade80;
+  --success-hover: #22c55e;
+  --success-bg: rgba(74, 222, 128, 0.12);
+  --success-border: rgba(74, 222, 128, 0.4);
+
+  --info: #60a5fa;
+  --info-bg: rgba(96, 165, 250, 0.12);
+  --info-border: rgba(96, 165, 250, 0.4);
+
+  --neutral-bg: #262230;
+  --neutral-border: #3b3548;
+  --neutral-text: #a8a3b5;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 #root {

@@ -8,6 +8,10 @@ const uk: typeof en = {
     reduxDemo: 'Redux демо',
     cart: 'Кошик',
     language: 'Мова',
+    light: 'Світла',
+    dark: 'Темна',
+    switchToLight: 'Увімкнути світлу тему',
+    switchToDark: 'Увімкнути темну тему',
   },
   shopPage: {
     title: 'Сторінка товарів',

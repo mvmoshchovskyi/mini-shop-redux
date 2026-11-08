@@ -28,9 +28,9 @@
 
 .active {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .active:hover {
-  color: #fff;
+  color: var(--accent-contrast);
 }

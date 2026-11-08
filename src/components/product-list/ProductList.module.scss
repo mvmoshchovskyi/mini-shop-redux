@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
-  background-color: lightgreen;
+  background-color: var(--surface-muted);
 }
 
 .buttons {
@@ -35,25 +35,25 @@
 }
 
 .clearButton {
-  border-color: #dc2626;
-  background-color: #fff;
-  color: #dc2626;
+  border-color: var(--danger);
+  background-color: var(--bg);
+  color: var(--danger);
 }
 
 .clearButton:hover {
-  background-color: #dc2626;
-  color: #fff;
+  background-color: var(--danger);
+  color: var(--bg);
 }
 
 .restoreButton {
-  border-color: #16a34a;
-  background-color: #fff;
-  color: #16a34a;
+  border-color: var(--success);
+  background-color: var(--bg);
+  color: var(--success);
 }
 
 .restoreButton:hover {
-  background-color: #16a34a;
-  color: #fff;
+  background-color: var(--success);
+  color: var(--bg);
 }
 
 .button:focus-visible {

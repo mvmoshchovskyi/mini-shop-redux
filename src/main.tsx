@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { store } from './app/store.ts';
 import { LanguageProvider } from './context/LanguageProvider.tsx';
+import { ThemeProvider } from './context/ThemeProvider.tsx';
 import './i18n';
 import './index.css';
 import App from './App.tsx';
@@ -12,11 +13,13 @@ import App from './App.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <LanguageProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </LanguageProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </LanguageProvider>
+      </ThemeProvider>
     </Provider>
   </StrictMode>,
 );

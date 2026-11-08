@@ -54,27 +54,27 @@
 }
 
 .badgeIdle {
-  border-color: #d1d5db;
-  background: #f3f4f6;
-  color: #6b7280;
+  border-color: var(--neutral-border);
+  background: var(--neutral-bg);
+  color: var(--neutral-text);
 }
 
 .badgeLoading {
-  border-color: #bfdbfe;
-  background: #eff6ff;
-  color: #1d4ed8;
+  border-color: var(--info-border);
+  background: var(--info-bg);
+  color: var(--info);
 }
 
 .badgeSuccess {
-  border-color: #bbf7d0;
-  background: #f0fdf4;
-  color: #15803d;
+  border-color: var(--success-border);
+  background: var(--success-bg);
+  color: var(--success);
 }
 
 .badgeError {
-  border-color: #fecaca;
-  background: #fef2f2;
-  color: #b91c1c;
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
 .stats {
@@ -156,7 +156,7 @@
 
 .button:hover:not(:disabled) {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .button:focus-visible {
@@ -181,14 +181,14 @@
 }
 
 .dangerButton {
-  border-color: #dc2626;
-  background: #fff;
-  color: #dc2626;
+  border-color: var(--danger);
+  background: var(--bg);
+  color: var(--danger);
 }
 
 .dangerButton:hover:not(:disabled) {
-  background: #dc2626;
-  color: #fff;
+  background: var(--danger);
+  color: var(--bg);
 }
 
 .sectionLabel {

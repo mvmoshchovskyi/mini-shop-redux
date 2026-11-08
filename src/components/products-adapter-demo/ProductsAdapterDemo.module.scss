@@ -60,10 +60,10 @@
 .error {
   margin: 0;
   padding: 12px 14px;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--danger-border);
   border-radius: 10px;
-  background: #fef2f2;
-  color: #b91c1c;
+  background: var(--danger-bg);
+  color: var(--danger);
   font-size: 14px;
 }
 

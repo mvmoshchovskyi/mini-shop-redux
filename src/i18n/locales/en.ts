@@ -5,6 +5,10 @@ const en = {
     reduxDemo: 'Redux demo',
     cart: 'Cart',
     language: 'Language',
+    light: 'Light',
+    dark: 'Dark',
+    switchToLight: 'Switch to light theme',
+    switchToDark: 'Switch to dark theme',
   },
   shopPage: {
     title: 'Products page',

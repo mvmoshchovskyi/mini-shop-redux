@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
 
 import { LanguageSwitcher } from '../language-switcher/LanguageSwitcher';
+import { ThemeSwitcher } from '../theme-switcher/ThemeSwitcher';
 import styles from './Header.module.scss';
 
 export const Header = () => {
@@ -43,6 +44,7 @@ export const Header = () => {
         </NavLink>
 
         <LanguageSwitcher />
+        <ThemeSwitcher />
       </nav>
     </header>
   );
