@@ -2,16 +2,16 @@
 import {
   useAddProductMutation,
   useGetProductsQuery,
-  useUpdateProductMutation,
+  // useUpdateProductMutation,
 } from "../../features/products/productsApi";
 import { products as initialProducts } from "../../data/products";
 // import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProductCard } from "../product-card/ProductCard";
-import {
-  clearProducts,
-  // fetchProducts,
-  setProducts,
-} from "../../features/products/productsSlice";
+// import {
+//   clearProducts,
+//   fetchProducts,
+//   setProducts,
+// } from "../../features/products/productsSlice";
 import styles from "./ProductList.module.scss";
 
 export const ProductList = () => {

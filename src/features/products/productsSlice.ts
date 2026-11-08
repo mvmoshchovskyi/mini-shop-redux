@@ -5,25 +5,34 @@ import {
 } from "@reduxjs/toolkit";
 
 import type { Product } from "../../types/product";
-import { products } from "../../data/products";
+// import { products } from "../../data/products";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 
-interface ProductsState {
+export const productsAdapter = createEntityAdapter<Product>();
+
+
+
+interface ProductsExtraState {
   selectedProduct: Product | null;
-  items: Product[];
   productsLoading: boolean;
   productLoading: boolean;
   productsByCategoryLoading: boolean;
   error: string | null;
 }
 
-const initialState: ProductsState = {
+// getInitialState() створює початкову структуру:
+// {
+//   ids: [],
+//   entities: {}
+// }
+// а ми додаємо до неї власні властивості.
+const initialState = productsAdapter.getInitialState<ProductsExtraState>({
   selectedProduct: null,
-  items: products,
   productsLoading: false,
   productLoading: false,
   productsByCategoryLoading: false,
   error: null,
-};
+});
 
 export const fetchProducts = createAsyncThunk<
   Product[],
@@ -73,11 +82,13 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     setProducts: (state, action: PayloadAction<Product[]>) => {
-      state.items = action.payload;
+      // state.items = action.payload;
+      productsAdapter.setAll(state, action.payload)
     },
 
     clearProducts: (state) => {
-      state.items = [];
+      // state.items = [];
+      productsAdapter.removeAll(state)
     },
   },
   extraReducers: (builder) => {
@@ -88,7 +99,8 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.productsLoading = false;
-        state.items = action.payload;
+        // state.items = action.payload;
+        productsAdapter.setAll(state, action.payload);
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.productsLoading = false;
@@ -112,7 +124,8 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
         state.productsByCategoryLoading = false;
-        state.items = action.payload;
+        // state.items = action.payload;
+        productsAdapter.setAll(state, action.payload);
       })
       .addCase(fetchProductsByCategory.rejected, (state, action) => {
         state.productsByCategoryLoading = false;
@@ -120,6 +133,9 @@ const productsSlice = createSlice({
       });
   },
 });
+export const productsSelectors = productsAdapter.getSelectors<RootState>(
+  (state) => state.products,
+);
 
 export const { setProducts, clearProducts } = productsSlice.actions;
 
