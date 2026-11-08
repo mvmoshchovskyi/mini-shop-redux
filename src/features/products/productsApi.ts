@@ -32,7 +32,7 @@ export const productsApi = createApi({
         method: "POST",
         body: newProduct,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
     updateProduct: builder.mutation<
       Product,
@@ -43,9 +43,38 @@ export const productsApi = createApi({
         method: "PUT",
         body: updatedProduct,
       }),
-      invalidatesTags: (_result, _error, arg) => {
-        return [{ type: "Products", id: arg.id }];
+
+      //Optimistic Update
+      //  queryFulfilled Promise, який повідомляє, чи успішно завершився запит до сервера.
+      onQueryStarted: async (
+        { id, updatedProduct },
+        { dispatch, queryFulfilled },
+      ) => {
+        const patchResult = dispatch(
+          // updateQueryData — утиліта RTK Query, яка дозволяє вручну змінити дані в кеші конкретного query.
+          productsApi.util.updateQueryData(
+            "getProducts",
+            undefined,
+            // draft — це масив товарів із кешу getProducts.
+            (draft) => {
+              const product = draft.find((item) => item.id === id);
+
+              // Завдяки Immer можемо змінювати product.price напряму
+              if (product && updatedProduct.price !== undefined) {
+                product.price = updatedProduct.price;
+              }
+            },
+          ),
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          // метод undo(), дозволяє скасувати внесені зміни.
+          patchResult.undo();
+        }
       },
+      // Після цієї mutation дані товару з таким id можуть бути застарілими.
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Products", id }],
     }),
   }),
 });
