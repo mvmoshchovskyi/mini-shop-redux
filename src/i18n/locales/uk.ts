@@ -81,7 +81,7 @@ const uk: typeof en = {
   rtkDemo: {
     title: 'RTK Query',
     description:
-      'Запит стартує лише після skip: false. Поки запит не запускався, стан — uninitialized. Далі RTK Query проходить через pending до fulfilled або rejected.',
+      'Ця сторінка використовує локальний фейковий сервер замість fakestoreapi. Він додає реальну затримку, справді зберігає зміни і може навмисно відхилити mutation. Так видно кешування, loading, fetching та optimistic updates.',
     status: {
       error: 'Помилка',
       loading: 'Завантаження',
@@ -89,15 +89,15 @@ const uk: typeof en = {
       success: 'Успіх',
       uninitialized: 'Не ініціалізовано',
     },
+    flagsLabel: 'Прапорці запиту',
     details: {
       status: 'status',
       dataLength: 'data.length',
-      firstProduct: 'перший товар',
+      selected: 'вибраний товар',
     },
     actions: {
-      run: 'Запустити запит',
-      skip: 'Пропустити запит',
       refetch: 'Оновити',
+      resetCache: 'Скинути кеш RTK Query',
     },
     steps: {
       one: 'isUninitialized — запит ще не запускався (або компонент пропускає його через skip).',
@@ -106,12 +106,53 @@ const uk: typeof en = {
         'isFetching — будь-який запит у процесі. Під час фонового refetch він true, але дані вже показані.',
       four: 'isSuccess / isError — запит завершився успішно або з помилкою.',
     },
-    cacheLabel: 'Кеш RTK Query: state.productsApi.queries',
-    cacheEmpty: 'Кеш порожній. Натисніть «Запустити запит», щоб побачити записи.',
-    cacheHasData: 'hasData',
-    noteTitle: 'Спільний кеш.',
+    productsHeading: 'Товари із закешованого запиту',
+    loadingProducts: 'Завантаження товарів...',
+    refreshing: 'Оновлення у фоні...',
+    loadingVsFetching: {
+      heading: 'isLoading проти isFetching',
+      isLoadingTitle: 'isLoading',
+      isLoadingText:
+        'Дорівнює true лише для першого запиту, коли в кеші ще немає даних. Використовуйте для скелетона або повноекранного лоадера.',
+      isFetchingTitle: 'isFetching',
+      isFetchingText:
+        'Дорівнює true для будь-якого запиту, включно з фоновим refetch. Використовуйте для маленького спінера або progress bar, поки старі дані залишаються на екрані.',
+    },
+    edit: {
+      heading: 'Optimistic update проти оновлення після сервера',
+      hint: 'Обидві кнопки оновлюють один і той самий фейковий сервер. Optimistic одразу змінює кеш і відкочує зміну при помилці. Друга кнопка чекає відповідь сервера і лише потім перезапитує список.',
+      priceLabel: 'Нова ціна',
+      simulateError: 'Імітувати помилку сервера',
+      simulateErrorHint:
+        'Фейковий сервер відхилить mutation із затримкою, щоб було видно, як optimistic-зміна відкочується.',
+      optimistic: 'Зберегти оптимістично',
+      optimisticSaving: 'Оптимістичне збереження...',
+      pessimistic: 'Дочекатися сервера',
+      pessimisticSaving: 'Очікування відповіді сервера...',
+      success: 'Збережено. RTK Query оновлює список у фоні.',
+      noProduct: 'Ще немає товару для редагування.',
+    },
+    cache: {
+      heading: 'Кеш проти відсутності кешу',
+      hint: 'Обидва запити звертаються до одного фейкового сервера. Різниця лише в keepUnusedDataFor.',
+      cachedTitle: 'Закешований запит',
+      cachedHint:
+        'keepUnusedDataFor: 60 с. Розмонтуйте, а потім змонтуйте знову — дані одразу прийдуть із кешу.',
+      noCacheTitle: 'Запит без кешу',
+      noCacheHint:
+        'keepUnusedDataFor: 0 с. Після розмонтування запис кешу видаляється, тому повторне монтування починається з isLoading.',
+      mount: 'Змонтувати запит',
+      unmount: 'Розмонтувати запит',
+      unmounted: 'Розмонтовано. Подивіться на записи кешу нижче.',
+      countLabel: 'data.length',
+      entriesHeading: 'Записи кешу: state.demoApi.queries',
+      entriesEmpty: 'Кеш порожній.',
+      hasData: 'hasData',
+      updatedAt: 'оновлено',
+    },
+    noteTitle: 'Навіщо фейковий сервер?',
     noteText:
-      'Сторінка Products і цей демо-компонент використовують один productsApi. Тому після відвідування Products запит тут може одразу віддати закешовані дані, поки isFetching оновлює їх у фоні.',
+      'fakestoreapi не зберігає PUT/POST: він відповідає успіхом, але наступний GET повертає старі дані. Тут фейковий сервер тримає зміни в пам’яті, тому optimistic updates і rollback поводяться як справжній API до перезавантаження сторінки.',
     unknownError: 'Невідома помилка',
   },
 };

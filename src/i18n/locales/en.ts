@@ -78,7 +78,7 @@ const en = {
   rtkDemo: {
     title: 'RTK Query',
     description:
-      'The query starts only after skip: false. Until it is started, the state is uninitialized. Then RTK Query moves through pending to fulfilled or rejected.',
+      'This page uses a local fake server instead of fakestoreapi. It adds real latency, actually saves edits, and can reject a mutation on purpose. That makes caching, loading, fetching and optimistic updates visible.',
     status: {
       error: 'Error',
       loading: 'Loading',
@@ -86,15 +86,15 @@ const en = {
       success: 'Success',
       uninitialized: 'Uninitialized',
     },
+    flagsLabel: 'Query flags',
     details: {
       status: 'status',
       dataLength: 'data.length',
-      firstProduct: 'first product',
+      selected: 'selected product',
     },
     actions: {
-      run: 'Run query',
-      skip: 'Skip query',
       refetch: 'Refetch',
+      resetCache: 'Reset RTK Query cache',
     },
     steps: {
       one: 'isUninitialized — the query has not started yet (or the component skips it with skip).',
@@ -103,12 +103,53 @@ const en = {
         'isFetching — any request is in flight. During a background refetch it is true, but the data is already displayed.',
       four: 'isSuccess / isError — the request finished successfully or with an error.',
     },
-    cacheLabel: 'RTK Query cache: state.productsApi.queries',
-    cacheEmpty: 'The cache is empty. Press “Run query” to see entries.',
-    cacheHasData: 'hasData',
-    noteTitle: 'Shared cache.',
+    productsHeading: 'Products from the cached query',
+    loadingProducts: 'Loading products...',
+    refreshing: 'Refreshing in the background...',
+    loadingVsFetching: {
+      heading: 'isLoading vs isFetching',
+      isLoadingTitle: 'isLoading',
+      isLoadingText:
+        'True only for the first request, when the cache has no data. Use it for a skeleton or a full-page loader.',
+      isFetchingTitle: 'isFetching',
+      isFetchingText:
+        'True for any request, including a background refetch. Use it for a small spinner or progress bar while the old data stays on screen.',
+    },
+    edit: {
+      heading: 'Optimistic update vs server-first update',
+      hint: 'Both buttons update the same fake server. The optimistic one changes the cache immediately and rolls back on error. The server-first one waits for the response, and only then refetches the list.',
+      priceLabel: 'New price',
+      simulateError: 'Simulate a server error',
+      simulateErrorHint:
+        'The fake server rejects the mutation after a delay, so you can watch the optimistic patch being undone.',
+      optimistic: 'Save optimistically',
+      optimisticSaving: 'Saving optimistically...',
+      pessimistic: 'Wait for the server',
+      pessimisticSaving: 'Waiting for the server...',
+      success: 'Saved. RTK Query is refetching the list in the background.',
+      noProduct: 'There is no product to edit yet.',
+    },
+    cache: {
+      heading: 'Cache vs no cache',
+      hint: 'Both probes call the same fake server. The only difference is keepUnusedDataFor.',
+      cachedTitle: 'Cached query',
+      cachedHint:
+        'keepUnusedDataFor: 60 s. Unmount it, then mount it again — the data comes from the cache instantly.',
+      noCacheTitle: 'No-cache query',
+      noCacheHint:
+        'keepUnusedDataFor: 0 s. Unmounting removes the cache entry, so mounting again starts with isLoading.',
+      mount: 'Mount query',
+      unmount: 'Unmount query',
+      unmounted: 'Unmounted. Look at the cache entries below.',
+      countLabel: 'data.length',
+      entriesHeading: 'Cache entries: state.demoApi.queries',
+      entriesEmpty: 'The cache is empty.',
+      hasData: 'hasData',
+      updatedAt: 'updated',
+    },
+    noteTitle: 'Why a fake server?',
     noteText:
-      'The Products page and this demo component use the same productsApi. So after visiting Products, this query may immediately return cached data while isFetching refreshes it in the background.',
+      'fakestoreapi does not persist PUT/POST requests: it answers with success but the next GET returns the old data. Here the fake server keeps changes in memory, so optimistic updates and rollbacks behave like a real API until the page is reloaded.',
     unknownError: 'Unknown error',
   },
 };
