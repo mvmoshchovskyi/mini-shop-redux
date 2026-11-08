@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectCartItems, selectCartTotal } from "../../features/cart/cartSelectors";
 import {
@@ -8,6 +10,7 @@ import {
 import styles from "./Cart.module.scss";
 
 export const Cart = () => {
+  const { t } = useTranslation();
   // const cartItems = useAppSelector((state) => state.cart.items);
   const total = useAppSelector(selectCartTotal);
   const cartItems = useAppSelector(selectCartItems);
@@ -16,7 +19,9 @@ export const Cart = () => {
 
   return (
     <section className={styles.cart}>
-      <h2 className={styles.heading}>Cart ({cartItems.length})</h2>
+      <h2 className={styles.heading}>
+        {t("cart.title", { count: cartItems.length })}
+      </h2>
 
       {cartItems.map((item) => (
         <div className={styles.item} key={item.id}>
@@ -50,12 +55,12 @@ export const Cart = () => {
             type="button"
             onClick={() => dispatch(removeFromCart(item.id))}
           >
-            Remove
+            {t("cart.remove")}
           </button>
         </div>
       ))}
 
-      <h3 className={styles.total}>Total: ${total}</h3>
+      <h3 className={styles.total}>{t("cart.total", { total })}</h3>
     </section>
   );
 };

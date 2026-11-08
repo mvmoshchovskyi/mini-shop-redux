@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import type { Product } from "../../types/product";
 import { useAppDispatch } from "../../app/hooks";
 import { addToCart } from "../../features/cart/cartSlice";
@@ -9,6 +11,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const handleAddToCart = () => {
@@ -36,14 +39,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <div className={styles.footer}>
         <p className={styles.price}>${product.price}</p>
         <button className={styles.button} onClick={handleAddToCart}>
-          Add to cart
+          {t("productCard.addToCart")}
         </button>
         <button
           disabled={isUpdatingProduct}
           onClick={handleUpdateProduct}
           className={`${styles.button} ${styles.clearButton}`}
         >
-          {isUpdatingProduct ? "Updating..." : "Update product"}
+          {isUpdatingProduct
+            ? t("productCard.updating")
+            : t("productCard.updateProduct")}
         </button>
       </div>
     </article>

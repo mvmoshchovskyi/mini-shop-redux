@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
@@ -17,14 +18,22 @@ import { ProductCard } from '../product-card/ProductCard';
 import ui from '../demo-ui/DemoUi.module.scss';
 import styles from './ProductsAdapterDemo.module.scss';
 
-const statusViews = {
-  idle: { label: 'Idle', className: ui.badgeIdle },
-  loading: { label: 'Loading', className: ui.badgeLoading },
-  ready: { label: 'Ready', className: ui.badgeSuccess },
-  error: { label: 'Error', className: ui.badgeError },
+const statusClassNames = {
+  idle: ui.badgeIdle,
+  loading: ui.badgeLoading,
+  ready: ui.badgeSuccess,
+  error: ui.badgeError,
+} as const;
+
+const statusTranslationKeys = {
+  idle: 'adapterDemo.status.idle',
+  loading: 'adapterDemo.status.loading',
+  ready: 'adapterDemo.status.ready',
+  error: 'adapterDemo.status.error',
 } as const;
 
 export const ProductsAdapterDemo = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const products = useAppSelector(productsSelectors.selectAll);
@@ -59,8 +68,6 @@ export const ProductsAdapterDemo = () => {
       : total > 0
         ? 'ready'
         : 'idle';
-
-  const statusView = statusViews[status];
 
   const handleAddProduct = () => {
     const nextId = ids.length > 0 ? Math.max(...ids.map(Number)) + 1 : 1;
@@ -100,35 +107,32 @@ export const ProductsAdapterDemo = () => {
     <section className={ui.panel}>
       <div className={ui.panelHeader}>
         <div>
-          <h2 className={ui.panelTitle}>Redux + createEntityAdapter</h2>
+          <h2 className={ui.panelTitle}>{t('adapterDemo.title')}</h2>
           <p className={ui.panelDescription}>
-            Дані зберігаються у нормалізованому вигляді: <code>ids</code> — масив
-            ідентифікаторів, <code>entities</code> — словник{' '}
-            <code>id → product</code>. Селектори adapter читають цю структуру,
-            а reducers adapter змінюють її.
+            {t('adapterDemo.description')}
           </p>
         </div>
 
-        <span className={`${ui.badge} ${statusView.className}`}>
-          {statusView.label}
+        <span className={`${ui.badge} ${statusClassNames[status]}`}>
+          {t(statusTranslationKeys[status])}
         </span>
       </div>
 
       <dl className={ui.stats}>
         <div className={ui.stat}>
-          <dt className={ui.statLabel}>selectTotal</dt>
+          <dt className={ui.statLabel}>{t('adapterDemo.stats.total')}</dt>
           <dd className={ui.statValue}>{total}</dd>
         </div>
         <div className={ui.stat}>
-          <dt className={ui.statLabel}>ids.length</dt>
+          <dt className={ui.statLabel}>{t('adapterDemo.stats.idsLength')}</dt>
           <dd className={ui.statValue}>{ids.length}</dd>
         </div>
         <div className={ui.stat}>
-          <dt className={ui.statLabel}>entities keys</dt>
+          <dt className={ui.statLabel}>{t('adapterDemo.stats.entitiesKeys')}</dt>
           <dd className={ui.statValue}>{Object.keys(entities).length}</dd>
         </div>
         <div className={ui.stat}>
-          <dt className={ui.statLabel}>ids</dt>
+          <dt className={ui.statLabel}>{t('adapterDemo.stats.ids')}</dt>
           <dd className={`${ui.statValue} ${styles.idsValue}`}>
             {ids.length > 0 ? ids.join(', ') : '—'}
           </dd>
@@ -144,14 +148,16 @@ export const ProductsAdapterDemo = () => {
           onClick={() => dispatch(fetchProducts())}
           disabled={isLoading}
         >
-          {isLoading ? 'Loading...' : 'Load products'}
+          {isLoading
+            ? t('adapterDemo.actions.loading')
+            : t('adapterDemo.actions.load')}
         </button>
         <button
           type="button"
           className={`${ui.button} ${ui.ghostButton}`}
           onClick={handleAddProduct}
         >
-          Add local product
+          {t('adapterDemo.actions.add')}
         </button>
         <button
           type="button"
@@ -159,7 +165,7 @@ export const ProductsAdapterDemo = () => {
           onClick={handleUpdateSelected}
           disabled={!selectedProduct}
         >
-          Update price +10
+          {t('adapterDemo.actions.updatePrice')}
         </button>
         <button
           type="button"
@@ -167,7 +173,7 @@ export const ProductsAdapterDemo = () => {
           onClick={handleRemoveSelected}
           disabled={!selectedProduct}
         >
-          Remove selected
+          {t('adapterDemo.actions.remove')}
         </button>
         <button
           type="button"
@@ -175,13 +181,13 @@ export const ProductsAdapterDemo = () => {
           onClick={() => dispatch(clearProducts())}
           disabled={total === 0}
         >
-          clearProducts()
+          {t('adapterDemo.actions.clear')}
         </button>
       </div>
 
       <div className={styles.toolbar}>
         <label className={styles.field}>
-          <span>Вибір id для selectById</span>
+          <span>{t('adapterDemo.selectLabel')}</span>
           <select
             className={styles.select}
             value={activeId ?? ''}
@@ -192,7 +198,9 @@ export const ProductsAdapterDemo = () => {
             }
             disabled={ids.length === 0}
           >
-            {ids.length === 0 && <option value="">Немає товарів</option>}
+            {ids.length === 0 && (
+              <option value="">{t('adapterDemo.selectEmpty')}</option>
+            )}
             {ids.map((id) => (
               <option key={id} value={id}>
                 {id}
@@ -202,7 +210,7 @@ export const ProductsAdapterDemo = () => {
         </label>
 
         <div className={styles.selectedCard}>
-          <p className={ui.sectionLabel}>Результат selectById</p>
+          <p className={ui.sectionLabel}>{t('adapterDemo.selectResult')}</p>
           <p className={styles.selectedText}>
             {selectedProduct
               ? `${selectedProduct.title} — $${selectedProduct.price}`
@@ -218,27 +226,19 @@ export const ProductsAdapterDemo = () => {
           ))}
         </div>
       ) : (
-        !isLoading && (
-          <p className={styles.empty}>
-            Товарів немає. Натисніть “Load products” або “Add local product”.
-          </p>
-        )
+        !isLoading && <p className={styles.empty}>{t('adapterDemo.empty')}</p>
       )}
 
       <div className={styles.debug}>
-        <p className={ui.sectionLabel}>
-          Нормалізований state.products (ids + entities)
-        </p>
+        <p className={ui.sectionLabel}>{t('adapterDemo.debugLabel')}</p>
         <pre className={ui.code}>
           {JSON.stringify({ ids, entities }, null, 2)}
         </pre>
       </div>
 
       <p className={ui.note}>
-        <strong>Навіщо це потрібно?</strong> Замість пошуку по масиву{' '}
-        <code>find()</code> ви отримуєте товар за O(1) через{' '}
-        <code>selectById</code>. А <code>updateOne</code> змінює лише один
-        запис, не перебираючи весь список.
+        <strong>{t('adapterDemo.noteTitle')}</strong>{' '}
+        {t('adapterDemo.noteText')}
       </p>
     </section>
   );

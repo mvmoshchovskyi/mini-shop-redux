@@ -1,12 +1,16 @@
+import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
 
+import { LanguageSwitcher } from '../language-switcher/LanguageSwitcher';
 import styles from './Header.module.scss';
 
 export const Header = () => {
+  const { t } = useTranslation();
+
   return (
     <header className={styles.header}>
       <Link className={styles.brand} to="/">
-        Mini Shop
+        {t('common.appName')}
       </Link>
 
       <nav className={styles.nav}>
@@ -17,7 +21,7 @@ export const Header = () => {
           to="/"
           end
         >
-          Products
+          {t('common.products')}
         </NavLink>
 
         <NavLink
@@ -26,7 +30,7 @@ export const Header = () => {
           }
           to="/demo"
         >
-          Redux demo
+          {t('common.reduxDemo')}
         </NavLink>
 
         <NavLink
@@ -35,8 +39,10 @@ export const Header = () => {
           }
           to="/cart"
         >
-          Cart
+          {t('common.cart')}
         </NavLink>
+
+        <LanguageSwitcher />
       </nav>
     </header>
   );

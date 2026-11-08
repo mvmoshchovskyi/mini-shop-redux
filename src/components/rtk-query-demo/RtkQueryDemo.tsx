@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../../app/hooks';
 import { useGetProductsQuery } from '../../features/products/productsApi';
@@ -12,7 +13,15 @@ const queryStatusClassNames = {
   rejected: ui.badgeError,
 } as const;
 
-const getErrorMessage = (error: unknown) => {
+const rtkStatusTranslationKeys = {
+  error: 'rtkDemo.status.error',
+  loading: 'rtkDemo.status.loading',
+  fetching: 'rtkDemo.status.fetching',
+  success: 'rtkDemo.status.success',
+  uninitialized: 'rtkDemo.status.uninitialized',
+} as const;
+
+const getErrorMessage = (error: unknown, fallback: string) => {
   if (!error) {
     return null;
   }
@@ -27,10 +36,11 @@ const getErrorMessage = (error: unknown) => {
     return `status: ${String(error.status)} ${data}`.trim();
   }
 
-  return 'Unknown error';
+  return fallback;
 };
 
 export const RtkQueryDemo = () => {
+  const { t } = useTranslation();
   const [enabled, setEnabled] = useState(false);
 
   const {
@@ -55,14 +65,26 @@ export const RtkQueryDemo = () => {
   );
 
   const statusView = isError
-    ? { label: 'Error', className: ui.badgeError }
+    ? { labelKey: rtkStatusTranslationKeys.error, className: ui.badgeError }
     : isLoading
-      ? { label: 'Loading', className: ui.badgeLoading }
+      ? {
+          labelKey: rtkStatusTranslationKeys.loading,
+          className: ui.badgeLoading,
+        }
       : isFetching
-        ? { label: 'Fetching', className: ui.badgeLoading }
+        ? {
+            labelKey: rtkStatusTranslationKeys.fetching,
+            className: ui.badgeLoading,
+          }
         : isSuccess
-          ? { label: 'Success', className: ui.badgeSuccess }
-          : { label: 'Uninitialized', className: ui.badgeIdle };
+          ? {
+              labelKey: rtkStatusTranslationKeys.success,
+              className: ui.badgeSuccess,
+            }
+          : {
+              labelKey: rtkStatusTranslationKeys.uninitialized,
+              className: ui.badgeIdle,
+            };
 
   const flags = [
     { name: 'isUninitialized', value: isUninitialized },
@@ -72,23 +94,18 @@ export const RtkQueryDemo = () => {
     { name: 'isError', value: isError },
   ];
 
-  const errorMessage = getErrorMessage(error);
+  const errorMessage = getErrorMessage(error, t('rtkDemo.unknownError'));
 
   return (
     <section className={ui.panel}>
       <div className={ui.panelHeader}>
         <div>
-          <h2 className={ui.panelTitle}>RTK Query</h2>
-          <p className={ui.panelDescription}>
-            Запит стартує лише після <code>skip: false</code>. Поки запит не
-            запускався, стан — <code>uninitialized</code>. Далі RTK Query
-            проходить через <code>pending</code> до <code>fulfilled</code> або{' '}
-            <code>rejected</code>.
-          </p>
+          <h2 className={ui.panelTitle}>{t('rtkDemo.title')}</h2>
+          <p className={ui.panelDescription}>{t('rtkDemo.description')}</p>
         </div>
 
         <span className={`${ui.badge} ${statusView.className}`}>
-          {statusView.label}
+          {t(statusView.labelKey)}
         </span>
       </div>
 
@@ -105,15 +122,21 @@ export const RtkQueryDemo = () => {
 
       <div className={styles.details}>
         <div className={styles.detail}>
-          <span className={styles.detailLabel}>status</span>
+          <span className={styles.detailLabel}>
+            {t('rtkDemo.details.status')}
+          </span>
           <span className={styles.detailValue}>{status}</span>
         </div>
         <div className={styles.detail}>
-          <span className={styles.detailLabel}>data.length</span>
+          <span className={styles.detailLabel}>
+            {t('rtkDemo.details.dataLength')}
+          </span>
           <span className={styles.detailValue}>{data?.length ?? '—'}</span>
         </div>
         <div className={styles.detail}>
-          <span className={styles.detailLabel}>first product</span>
+          <span className={styles.detailLabel}>
+            {t('rtkDemo.details.firstProduct')}
+          </span>
           <span className={styles.detailValue}>
             {data?.[0]?.title ?? '—'}
           </span>
@@ -129,7 +152,7 @@ export const RtkQueryDemo = () => {
           onClick={() => setEnabled(true)}
           disabled={enabled && (isLoading || isFetching)}
         >
-          Run query
+          {t('rtkDemo.actions.run')}
         </button>
         <button
           type="button"
@@ -137,7 +160,7 @@ export const RtkQueryDemo = () => {
           onClick={() => setEnabled(false)}
           disabled={!enabled}
         >
-          Skip query
+          {t('rtkDemo.actions.skip')}
         </button>
         <button
           type="button"
@@ -145,37 +168,21 @@ export const RtkQueryDemo = () => {
           onClick={() => refetch()}
           disabled={!enabled || isLoading || isFetching}
         >
-          Refetch
+          {t('rtkDemo.actions.refetch')}
         </button>
       </div>
 
       <ol className={styles.steps}>
-        <li>
-          <code>isUninitialized</code> — запит ще не запускався (або компонент
-          пропускає його через <code>skip</code>).
-        </li>
-        <li>
-          <code>isLoading</code> — триває перший запит, даних у кеші ще немає.
-        </li>
-        <li>
-          <code>isFetching</code> — будь-який запит у процесі. Під час
-          фонового <code>refetch</code> він <code>true</code>, але дані вже
-          показані.
-        </li>
-        <li>
-          <code>isSuccess</code> / <code>isError</code> — запит завершився
-          успішно або з помилкою.
-        </li>
+        <li>{t('rtkDemo.steps.one')}</li>
+        <li>{t('rtkDemo.steps.two')}</li>
+        <li>{t('rtkDemo.steps.three')}</li>
+        <li>{t('rtkDemo.steps.four')}</li>
       </ol>
 
       <div className={styles.cache}>
-        <p className={ui.sectionLabel}>
-          Кеш RTK Query: state.productsApi.queries
-        </p>
+        <p className={ui.sectionLabel}>{t('rtkDemo.cacheLabel')}</p>
         {cacheEntries.length === 0 ? (
-          <p className={styles.empty}>
-            Кеш порожній. Натисніть “Run query”, щоб побачити записи.
-          </p>
+          <p className={styles.empty}>{t('rtkDemo.cacheEmpty')}</p>
         ) : (
           <ul className={styles.cacheList}>
             {cacheEntries.map((entry) => (
@@ -188,7 +195,9 @@ export const RtkQueryDemo = () => {
                 >
                   {entry.status}
                 </span>
-                <span>hasData: {String(entry.hasData)}</span>
+                <span>
+                  {t('rtkDemo.cacheHasData')}: {String(entry.hasData)}
+                </span>
               </li>
             ))}
           </ul>
@@ -196,10 +205,7 @@ export const RtkQueryDemo = () => {
       </div>
 
       <p className={ui.note}>
-        <strong>Спільний кеш.</strong> Сторінка Products і цей демо-компонент
-        використовують один <code>productsApi</code>. Тому після відвідування
-        Products запит тут може одразу віддати закешовані дані, поки{' '}
-        <code>isFetching</code> оновлює їх у фоні.
+        <strong>{t('rtkDemo.noteTitle')}</strong> {t('rtkDemo.noteText')}
       </p>
     </section>
   );

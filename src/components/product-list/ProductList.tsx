@@ -1,4 +1,6 @@
 // import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import {
   useAddProductMutation,
   useGetProductsQuery,
@@ -14,6 +16,8 @@ import { ProductCard } from "../product-card/ProductCard";
 import styles from "./ProductList.module.scss";
 
 export const ProductList = () => {
+  const { t } = useTranslation();
+
   // const {
   //   items: productList,
   //   productsLoading,
@@ -52,10 +56,10 @@ export const ProductList = () => {
   // }, [dispatch]);
   return (
     <section className={styles.list}>
-      <h2 className={styles.heading}>Product list</h2>
-      {isLoading && <p>Loading...</p>}
-      {productList && isFetching && <p>Updating products...</p>}
-      {error && <p>Something went wrong</p>}
+      <h2 className={styles.heading}>{t("productList.heading")}</h2>
+      {isLoading && <p>{t("productList.loading")}</p>}
+      {productList && isFetching && <p>{t("productList.updating")}</p>}
+      {error && <p>{t("productList.error")}</p>}
 
       <section className={styles.buttons}>
         <button
@@ -63,14 +67,16 @@ export const ProductList = () => {
           disabled={isAddingProduct}
           className={`${styles.button} ${styles.restoreButton}`}
         >
-          {isAddingProduct ? "Adding..." : "Add product"}
+          {isAddingProduct
+            ? t("productList.adding")
+            : t("productList.addProduct")}
         </button>
         <button
           disabled={isFetching}
           className={`${styles.button} ${styles.clearButton}`}
           onClick={() => refetch()}
         >
-          Refresh
+          {t("productList.refresh")}
         </button>
         {/* <button
           className={`${styles.button} ${styles.clearButton}`}
